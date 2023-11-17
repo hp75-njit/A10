@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cookie Demo Page</h1>
+    
+    <script>
+        function setCookie() {
+            var cookieName = "user_name";
+            var userName = prompt("Enter your name:");
+           
+            var expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 1);
+            
+            document.cookie = `${cookieName}=${userName}; expires=${expirationDate.toUTCString()}; path=/`;
+            location.reload(); // Reload the page to display the cookie
+        }
+
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+            
+            for(var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return "";
+        }
+        var userName = getCookie("user_name");
+        if (userName !== "") {
+            document.write("<p>Welcome, " + userName + "!</p>");
+        }
+    </script>
+
+    <button onclick="setCookie()">Set a Cookie</button>
+	<footer>
+		<p>&copy; Hima Patel, 2023</p>
+	</footer>
+</body>
+</html>
